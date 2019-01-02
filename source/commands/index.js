@@ -81,49 +81,49 @@ module.exports = {
             args: ['username']
         },
         play: {
-            enabled: true,
+            enabled: false,
             description: 'Plays a song from YT',
             type: 'music',
             command: 'library/music/play.js',
             args: ['url']
         },
         yt: {
-            enabled: true,
+            enabled: false,
             description: 'Searches songs to play on YT',
             type: 'music',
             command: 'library/music/yt.js',
             args: ['query']
         },
         skip: {
-            enabled: true,
+            enabled: false,
             description: 'Skips current song',
             type: 'music',
             command: 'library/music/skip.js',
             args: ''
         },
         pause: {
-            enabled: true,
+            enabled: false,
             description: 'Pauses current song',
             type: 'music',
             command: 'library/music/pause.js',
             args: ''
         },
         queue: {
-            enabled: true,
+            enabled: false,
             description: 'Displays queue',
             type: 'music',
             command: 'library/music/queue.js',
             args: ''
         },
         resume: {
-            enabled: true,
+            enabled: false,
             description: 'Resumes current song',
             type: 'music',
             command: 'library/music/resume.js',
             args: ''
         },
         volume: {
-            enabled: true,
+            enabled: false,
             description: 'Sets the current volume',
             type: 'music',
             command: 'library/music/volume.js',
