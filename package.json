@@ -19,7 +19,7 @@
     "erlpack": "github:hammerandchisel/erlpack",
     "express": "latest",
     "libsodium-wrappers": "latest",
-    "node-opus": "latest",
+    "opusscript": "latest",
     "oauth-1-client": "latest",
     "pg": "latest",
     "request": "latest",
