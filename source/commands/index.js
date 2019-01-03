@@ -11,7 +11,7 @@ module.exports = {
             args: ''
         },
         bans: {
-            enabled: true,
+            enabled: false,
             description: 'Displays server bans',
             type: 'general',
             command: 'library/general/bans.js',
@@ -32,7 +32,7 @@ module.exports = {
             args: ''
         },
         login: {
-            enabled: true,
+            enabled: false,
             description: 'Connect your KA account',
             type: 'general',
             command: 'library/general/login.js',

@@ -27,8 +27,5 @@
     "youtube-search": "latest",
     "ytdl-core": "latest",
     "zlib-sync": "latest"
-  },
-  "engines": {
-    "node": "11.6.0"
   }
 }
