@@ -11,7 +11,7 @@ module.exports = {
             args: ''
         },
         bans: {
-            enabled: false,
+            enabled: true,
             description: 'Displays server bans',
             type: 'general',
             command: 'library/general/bans.js',
