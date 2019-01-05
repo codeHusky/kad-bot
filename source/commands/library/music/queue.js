@@ -1,6 +1,5 @@
 "use strict";
 const Discord = require('discord.js');
-
 module.exports = (message, commandList, config, server) => {
     var queue = server.music.queue.songs;
     if(queue.length === 0) return message.channel.send('The queue is empty!')

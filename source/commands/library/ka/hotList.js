@@ -1,6 +1,6 @@
 "use strict";
 const request = require('request'),
-Discord = require('discord.js');
+    Discord = require('discord.js');
 module.exports = (message, commandList, config, server) => {
     request('https://www.khanacademy.org/api/internal/scratchpads/top?sort=3&limit=40&topic_id=xffde7c31', (error, response, body) => {
         var page = 1;

@@ -5,5 +5,5 @@ module.exports = (message, commandList, config, server) => {
     var user = message.mentions.members.first()
     var reason = message.content.split(' ').splice(2).join(' ');
     user.send(`You have been warned by <@${message.author.id}> for **${reason}**.`)
-    message.channel.send(`<@${user.id}> Has been warned for **${reason}**.`)
+    message.channel.send(`<@${user.id}> Has been warned for **${reason}** by <@${message.author.id}>`)
 };

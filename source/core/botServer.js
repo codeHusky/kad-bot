@@ -102,18 +102,17 @@ module.exports = class botServer {
         this.client.on('userUpdate', async (oldUser, newUser) => eventHandlers.userUpdate(oldUser, newUser));
         this.client.on('voiceStateUpdate', async (oldState, newState) => eventHandlers.voiceStateUpdate(oldState, newState));
         this.client.on('webhookUpdate', async channel => eventHandlers.webhookUpdate(channel));
-        console.log('[\x1b[36mConsole\x1b[0m] botServer Launched');
     }
 
     onMessage(message) {
         if (message.author.bot) return
         if (message.mentions.users.has(this.client.user.id)) message.react('🤔')
-        if (message.content === '<@483103420212051980> help') return require('../commands/'+commandList.general['help'].command)(message, commandList, this.config, this)
+        if (message.content === '<@483103420212051980> help') return require('../commands/' + commandList['help'].command)(message, commandList, this.config, this)
         if (!message.content.toLowerCase().startsWith(this.config.prefix)) return
         const command = message.content.toLowerCase().split(' ')[0].substring(this.config.prefix.length, message.content.toLowerCase().split(' ')[0].length)
-        if(Object.keys(commandList.general).includes(command)) {
-            if(!commandList.general[command].enabled) return message.reply(`${this.config.prefix}**${command}** is currently disabled!`)
-            require('../commands/'+commandList.general[command].command)(message, commandList, this.config, this)
-        } else message.reply(`${command} is not a command. Please choose a valid command or use ${this.config.prefix}help for help :smile:`)
+        if(Object.keys(commandList).includes(command)) {
+            if(!commandList[command].enabled) return message.reply(`${this.config.prefix}**${command}** is currently disabled!`)
+            require('../commands/'+commandList[command].command)(message, commandList, this.config, this)
+        } else message.react('❌')
     }
 }

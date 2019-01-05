@@ -4,5 +4,5 @@ module.exports = (message, commandList, config, server) => {
     if(!message.mentions.members.first()) return message.reply('Please specify a user!');
     var user = message.mentions.members.first()
     user.roles.remove(message.guild.roles.find(role => role.name === 'muted'));
-    message.channel.send(`<@${user.id}> Is no longer muted!`)
+    message.channel.send(`<@${message.author.id}> unmuted <@${user.id}>`)
 };

@@ -1,7 +1,6 @@
 "use strict";
 const request = require('request'),
-Discord = require('discord.js');
-
+    Discord = require('discord.js');
 module.exports = async (message, commandList, config, server) => {
     var user = message.content.split(' ')[1];
     if(!user) return message.channel.send('Please specify a username!');
