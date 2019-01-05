@@ -7,5 +7,5 @@ module.exports = {
         secret: 'pjVv6z78e7ZkAe97'
     },
     ytKey: 'AIzaSyDsgMUkx5suw1FghyZvTrpkHhBPKw6YBus',
-    callbackURL: 'http://kad-bot.herokuapp.com/login'
+    callbackURL: 'https://kad-bot.herokuapp.com/login'
 };
