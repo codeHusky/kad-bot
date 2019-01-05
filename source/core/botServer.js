@@ -53,7 +53,7 @@ module.exports = class botServer {
         this.client.on('ready', async => {
             this.client.user.setActivity(`with ${this.config.prefix}help`, { type: 'PLAYING' })
             setInterval(() => {
-                http.get("https://kad-bot.herokuapp.com");
+                http.get("http://kad-bot.herokuapp.com");
             }, 300000);
             console.log(`Logged in as ${this.client.user.tag}`)
         });
