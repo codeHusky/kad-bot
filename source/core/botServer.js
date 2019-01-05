@@ -4,6 +4,7 @@ const Discord = require('discord.js'),
     util = require('util'),
     express = require('express'),
     pg = require('pg'),
+    http = require('http'),
     commandList = require('../commands/index.js'),
     eventHandlers = require('../modules/eventHandlers.js'),
     music = require('../modules/music.js');
@@ -51,6 +52,9 @@ module.exports = class botServer {
         this.client.on('error', error => console.log(error));
         this.client.on('ready', async => {
             this.client.user.setActivity(`with ${this.config.prefix}help`, { type: 'PLAYING' })
+            setInterval(() => {
+                http.get("https://kad-bot.herokuapp.com");
+            }, 300000);
             console.log(`Logged in as ${this.client.user.tag}`)
         });
         this.client.on('raw', async event => {
