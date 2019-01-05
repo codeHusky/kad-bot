@@ -121,7 +121,8 @@ module.exports = {
                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                     .setFooter(`${messageReaction.message.reactions.find(reaction => messageReaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
                     .addField('Channel', messageReaction.message.channel)
-                    .addField('Message', messageReaction.message))
+                    .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
+                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
                 else {
                     await messageReaction.message.guild.channels.find(channel => channel.name === 'starboard').messages.fetch()
                         .then(messages => {
@@ -131,7 +132,8 @@ module.exports = {
                                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                                     .setFooter(`${messageReaction.message.reactions.find(reaction => reaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
                                     .addField('Channel', messageReaction.message.channel)
-                                    .addField('Message', messageReaction.message));
+                                    .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
+                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
                             })
                         })
                 }
@@ -150,14 +152,16 @@ module.exports = {
                                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                                     .setFooter(`${messageReaction.message.reactions.find(reaction => messageReaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
                                     .addField('Channel', messageReaction.message.channel)
-                                    .addField('Message', messageReaction.message));
+                                    .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
+                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
                                 else message.edit(new Discord.MessageEmbed()
                                     .setColor(0x00FF00)
                                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                                     .setFooter(`0⭐ | ${messageReaction.message.id}`)
                                     .addField('Channel', messageReaction.message.channel)
-                                    .addField('Message', messageReaction.message));
-                            }
+                                    .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
+                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
+                                }
                         })
                     })
                 break;

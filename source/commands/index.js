@@ -129,13 +129,6 @@ module.exports = {
             command: 'library/music/volume.js',
             args: ['volume']
         },
-        kick: {
-            enabled: true,
-            description: 'Kicks a user',
-            type: 'mod',
-            command: 'library/mod/kick.js',
-            args: ['user', 'reason']
-        },
         clear: {
             enabled: true,
             description: 'Clears messages',
@@ -170,20 +163,6 @@ module.exports = {
             type: 'mod',
             command: 'library/mod/warn.js',
             args: ['user']
-        },
-        ban: {
-          enabled: true,
-          description: 'Bans a user',
-          type: 'admin',
-          command: 'library/admin/ban.js',
-          args: ['user', 'reason']
-        },
-        unban: {
-          enabled: true,
-          description: 'Unbans a user',
-          type: 'admin',
-          command: 'library/admin/unban.js',
-          args: ['userid']
         }
     }
 };

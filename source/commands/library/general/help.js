@@ -15,7 +15,6 @@ module.exports = (message, commandList, config, server) => {
                 .addField('Music', dmCommands.music)
                 .addField('KA', dmCommands.ka)
                 .addField('Moderator', dmCommands.mod)
-                .addField('Administrator', dmCommands.admin)
                 .setFooter("kaBot | The best Khan Academy Discord Bot out there!")});
         })
 };
