@@ -52,9 +52,6 @@ module.exports = class botServer {
         this.client.on('ready', async => {
             this.client.user.setActivity(`with ${this.config.prefix}help`, { type: 'PLAYING' })
             console.log(`Logged in as ${this.client.user.tag}`)
-            setInterval(() => {
-                this.client.guilds.get('528076719694020629').channels.find(channel => channel.name === 'keep-alive').send('ping')
-            }, 1000 * 60 * 15);
         });
         this.client.on('raw', async event => {
             if (event.t == 'MESSAGE_REACTION_ADD') {
