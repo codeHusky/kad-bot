@@ -18,6 +18,7 @@
     "ejs": "latest",
     "erlpack": "github:hammerandchisel/erlpack",
     "express": "latest",
+    "forever": "^0.15.3",
     "libsodium-wrappers": "latest",
     "node-opus": "latest",
     "oauth-1-client": "latest",

@@ -13,7 +13,7 @@ module.exports = class botServer {
         this.config = config;
         this.client = new Discord.Client();
         this.music = new music();
-        /*this.oauthClient = new OAuth1Client({
+        this.oauthClient = new OAuth1Client({
             key: this.config.keys.key,
             secret: this.config.keys.secret,
             callbackURL: this.config.callbackURL,
@@ -21,11 +21,11 @@ module.exports = class botServer {
             accessUrl: `https://www.khanacademy.org/api/auth2/access_token`,
             apiHostName: 'www.khanacademy.org'
         });
-        this.webClient = express();*/
+        this.webClient = express();
     }
 
     async init() {
-        /*this.webClient.engine('html', require('ejs').renderFile);
+        this.webClient.engine('html', require('ejs').renderFile);
         this.webClient.set('views', '.');
         this.webClient.use(express.static("source"));
         this.webClient.get('/', async (req, res) => res.render('source/html/index.html'));
@@ -46,7 +46,7 @@ module.exports = class botServer {
                 console.log(e)
             }
         });
-        this.webClient.listen(process.env.PORT || 80, () => console.log(`Web client open on port ${process.env.PORT || 80}!`));*/
+        this.webClient.listen(process.env.PORT || 80, () => console.log(`Web client open on port ${process.env.PORT || 80}!`));
         this.client.login(this.config.token);
         this.client.on('error', error => console.log(error));
         this.client.on('ready', async => {
