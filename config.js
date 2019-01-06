@@ -3,9 +3,9 @@ module.exports = {
     starboardStars: 5,
     token: process.env.BOT_TOKEN,
     keys: {
-        key: 'F7X3vL4pzRjb43xj',
-        secret: 'pjVv6z78e7ZkAe97'
+        key: '',
+        secret: ''
     },
-    ytKey: 'AIzaSyDsgMUkx5suw1FghyZvTrpkHhBPKw6YBus',
-    callbackURL: 'https://kad-bot.herokuapp.com/login'
+    ytKey: '',
+    callbackURL: 'https://localhost/login'
 };

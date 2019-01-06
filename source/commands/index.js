@@ -29,7 +29,7 @@ module.exports = {
         args: ''
     },
     login: {
-        enabled: true,
+        enabled: false,
         description: 'Connect your KA account',
         type: 'general',
         command: 'library/general/login.js',
