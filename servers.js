@@ -65,7 +65,7 @@ module.exports = {
         }
     },
     '528076719694020629': {
-        mutedRole: 'Muted',
+        mutedRole: 'muted',
         logsChannel: 'logs',
         starboardChannel: 'starboard',
         logs: {
