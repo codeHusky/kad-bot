@@ -10,10 +10,10 @@ module.exports = (message, commandList, config, server) => {
         var scratchpads = JSON.parse(body).scratchpads;
         for(var i = page * 5 - 5; i < page * 5; i++) embed.addField(`**${i + 1}**) ${scratchpads[i].title}`, `Created by: **${scratchpads[i].authorNickname}** | **${scratchpads[i].sumVotesIncremented}** votes | **${scratchpads[i].spinoffCount}** Spin-Offs | [**Link**](${scratchpads[i].url})`)
         message.channel.send(embed)
-        .then(async msg => {
+        .then(async (msg) => {
             const filter = (reaction, user) => user.id !== msg.author.id;
             const collector = msg.createReactionCollector(filter)
-            .on('collect', r => {
+            .on('collect', (r) => {
                 r.users.forEach((value, key) => {
                     if(key !== msg.author.id) r.users.remove(key)
                 })

@@ -1,3 +1,4 @@
+var servers = require('./servers.js');
 module.exports = {
     prefix: 'k!',
     starboardStars: 5,
@@ -7,5 +8,6 @@ module.exports = {
         secret: ''
     },
     ytKey: '',
-    callbackURL: 'https://localhost/login'
+    callbackURL: 'https://localhost/login',
+    servers: servers
 };

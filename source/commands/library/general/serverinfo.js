@@ -10,11 +10,11 @@ module.exports = (message, commandList, config, server) => {
         .addField('Members', message.guild.memberCount, true)
         .addField('ID', message.guild.id, true)
         .addField('Owner', message.guild.owner.user.tag, true)
-        .addField('Humans', message.guild.members.filter(member => !member.user.bot).size, true)
+        .addField('Humans', message.guild.members.filter((member) => !member.user.bot).size, true)
         .addField('Region', message.guild.region, true)
         .addField('Owner ID', message.guild.ownerID, true)
-        .addField('Bots', message.guild.members.filter(membe r=> member.user.bot).size, true)
+        .addField('Bots', message.guild.members.filter((member) => member.user.bot).size, true)
         .addField('Channels', message.guild.channels.size, true)
-        .addField('Online', message.guild.members.filter(member => member.user.presence.status !== 'offline').size, true)
+        .addField('Online', message.guild.members.filter((member) => member.user.presence.status !== 'offline').size, true)
         .addField('Custom Emojis', message.guild.emojis.size, true));
 };

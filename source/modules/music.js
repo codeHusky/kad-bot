@@ -97,11 +97,11 @@ class music {
                 passes: 25,
                 bitrate: 96000
             })
-            .on('end', reason => {
+            .on('end', (reason) => {
                 this.queue.songs.shift();
                 this.play(guild, this.queue.songs[0]);
             })
-            .on('error', error => console.error(error));
+            .on('error', (error) => console.error(error));
             this.queue.playing = true;
             this.queue.textChannel.send(`Started playing: **${song.title}**`);
         });
