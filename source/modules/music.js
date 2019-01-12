@@ -20,7 +20,7 @@ class music {
     }
 
     skip(message) {
-        if(message.author.id !== '419151003766620180') return
+        if(message.author.id !== '419151003766620180' && !message.member.roles.has('453715852735414302')) return;
         if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`)
         if(this.queue.songs.length === 0) return message.channel.send(`No songs are in the queue0!`)
         this.queue.dispatcher.end();
