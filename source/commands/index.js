@@ -35,6 +35,13 @@ module.exports = {
         command: 'library/general/login.js',
         args: ''
     },
+    rules: {
+        enabled: false,
+        description: 'View server rules',
+        type: 'general',
+        command: 'library/general/rules.js',
+        args: ''
+    },
     suggestion: {
         enabled: true,
         description: 'Use this command to give a suggestion to improve the server!',
@@ -78,7 +85,7 @@ module.exports = {
         args: ['username']
     },
     play: {
-        enabled: true,
+        enabled: false,
         description: 'Plays a song from YT',
         type: 'music',
         command: 'library/music/play.js',

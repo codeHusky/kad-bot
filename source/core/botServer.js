@@ -1,13 +1,14 @@
 "use strict";
 const Discord = require('discord.js'),
     OAuth1Client = require("oauth-1-client"),
-    util = require('util'),
     express = require('express'),
-    pg = require('pg'),
-    http = require('http'),
     commandList = require('../commands/index.js'),
     eventHandlers = require('../modules/eventHandlers.js'),
-    music = require('../modules/music.js');
+    music = require('../modules/music.js'),
+    events = {
+      	MESSAGE_REACTION_ADD: 'messageReactionAdd',
+      	MESSAGE_REACTION_REMOVE: 'messageReactionRemove',
+    };
 
 module.exports = class botServer {
     constructor(config) {
@@ -31,44 +32,40 @@ module.exports = class botServer {
         this.webClient.use(express.static("source"));
         this.webClient.get('/', async (req, res) => res.render('source/html/index.html'));
         this.webClient.get('/login/', async (req, res) => {
-            console.log('connection')
+            console.log('connection');
             try{
-                res.render('source/html/login.html')
+                res.render('source/html/login.html');
                 const { query } = req;
                 await this.oauthClient.accessToken(query.oauth_token, query.oauth_token_secret, query.oauth_verifier)
                     .then(async (tokens) => {
                         await this.oauthClient.auth(tokens.token, tokens.tokenSecret)
                             .get("/api/v1/user", { casing: "camel" })
                             .then(async (response) => {
-                                console.log(response)
-                            })
-                    })
+                                console.log(response);
+                            });
+                    });
             } catch(e) {
-                console.log(e)
+                console.log(e);
             }
         });
         this.webClient.listen(80, () => console.log(`Web client open on port 80!`));
         this.client.login(this.config.token);
         this.client.on('error', (error) => console.log(error));
-        this.client.on('ready', async () => {
-            this.client.user.setActivity(`with ${this.config.prefix}help`, { type: 'PLAYING' })
-            console.log(`Logged in as ${this.client.user.tag}`)
+        this.client.once('ready', async () => {
+            this.client.user.setActivity(`${this.config.prefix}help`, {url: 'https://www.twitch.tv/sharkfinpro', type: 'STREAMING'});
+            console.log(`Logged in as ${this.client.user.tag}`);
         });
-        this.client.on('raw', async (event) => {
-            if (event.t == 'MESSAGE_REACTION_ADD') {
-                const { d: data } = event;
-                const channel = this.client.channels.get(data.channel_id);
-                if (channel.messages.has(data.message_id)) return
-                const message = await channel.messages.fetch(data.message_id);
-                this.client.emit('messageReactionAdd', message.reactions.get(data.emoji.id || data.emoji.name), this.client.users.get(data.user_id));
-            }
-            if (event.t == 'MESSAGE_REACTION_REMOVE') {
-                const { d: data } = event;
-                const channel = this.client.channels.get(data.channel_id);
-                if (channel.messages.has(data.message_id)) return
-                const message = await channel.messages.fetch(data.message_id);
-                this.client.emit('messageReactionRemove', message.reactions.get(data.emoji.id || data.emoji.name), this.client.users.get(data.user_id));
-            }
+        this.client.on('raw', async event => {
+          	if (!events.hasOwnProperty(event.t)) return;
+          	const { d: data } = event;
+          	const user = this.client.users.get(data.user_id);
+          	const channel = this.client.channels.get(data.channel_id) || await user.createDM();
+          	if (channel.messages.has(data.message_id)) return;
+          	const message = await channel.fetchMessage(data.message_id);
+          	const emojiKey = (data.emoji.id) ? `${data.emoji.name}:${data.emoji.id}` : data.emoji.name;
+          	let reaction = message.reactions.get(emojiKey);
+          	if (!reaction) reaction = new Discord.MessageReaction(message, new Discord.Emoji(this.client.guilds.get(data.guild_id), data.emoji), 1, data.user_id === this.client.user.id);
+          	this.client.emit(events[event.t], reaction, user);
         });
         this.client.on('message', (message) => this.onMessage(message));
         this.client.on('channelCreate', async (channel) => eventHandlers.channelCreate(channel));
@@ -106,14 +103,16 @@ module.exports = class botServer {
     }
 
     onMessage(message) {
-        if (message.author.bot) return
-        if (message.mentions.users.has(this.client.user.id)) message.react('🤔')
-        if (message.content === '<@483103420212051980> help') return require('../commands/' + commandList['help'].command)(message, commandList, this.config, this)
-        if (!message.content.toLowerCase().startsWith(this.config.prefix)) return
-        const command = message.content.toLowerCase().split(' ')[0].substring(this.config.prefix.length, message.content.toLowerCase().split(' ')[0].length)
+        if (message.author.bot) return;
+        if (message.content.includes('tenor.com') || message.content.includes('giphy.com') || message.content.includes('imgur.com')) return message.delete();
+        if (message.mentions.users.has(this.client.user.id)) message.react('🤔');
+        if (message.content === '<@483103420212051980> help') return require('../commands/' + commandList['help'].command)(message, commandList, this.config, this);
+        if (!message.content.toLowerCase().startsWith(this.config.prefix)) return;
+        const command = message.content.toLowerCase().split(' ')[0].substring(this.config.prefix.length, message.content.toLowerCase().split(' ')[0].length);
         if(Object.keys(commandList).includes(command)) {
-            if(!this.config.servers[message.guild.id].commands[command] || !commandList[command].enabled) return message.reply(`${this.config.prefix}**${command}** is currently disabled!`)
-            require('../commands/'+commandList[command].command)(message, commandList, this.config, this)
-        } else message.react('❌')
+            if(!this.config.servers[message.guild.id].commands[command] || !commandList[command].enabled) return message.reply(`${this.config.prefix}**${command}** is currently disabled!`);
+            require('../commands/'+commandList[command].command)(message, commandList, this.config, this);
+        } else message.react('❌');
     }
-}
+};
+process.on('exit', e => console.log(`Process exited with code ${e}`));

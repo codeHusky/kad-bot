@@ -5,7 +5,7 @@ module.exports = async (message, commandList, config, server) => {
     var user = message.content.split(' ')[1];
     if(!user) return message.channel.send('Please specify a username!');
     request('http://www.khanacademy.org/api/internal/signup/check-username?username='+user, (error, response, body) => {
-        if(body !== "That username isn't available.") return message.channel.send('No user has that username!')
+        if(body !== "That username isn't available.") return message.channel.send('No user has that username!');
         request('http://www.khanacademy.org/api/internal/user/profile?username='+user, (error, response, body) => {
             if(!JSON.parse(body)) return message.channel.send(`**${user}** is a child account, and you may not see info about it.`);
             user = JSON.parse(body);
@@ -19,5 +19,5 @@ module.exports = async (message, commandList, config, server) => {
                 .addField('Avatar', user.avatar.displayName, true)
                 .addField('Energy Points', user.points, true));
         });
-    })
+    });
 };

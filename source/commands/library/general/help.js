@@ -6,7 +6,7 @@ module.exports = (message, commandList, config, server) => {
         commands[commandList[each].type] ? true : commands[commandList[each].type] = [];
         commands[commandList[each].type].push(config.prefix + each + (commandList[each].args === '' ? '' : ' [' + commandList[each].args.join('] [') + ']') + ': ' + commandList[each].description);
     }
-    message.reply('Sending you commands in a DM!')
+    message.reply('Sending you commands in a DM!');
     message.author.send({embed: new Discord.MessageEmbed()
         .setColor(0xFF1493)
         .setTitle('Commands')

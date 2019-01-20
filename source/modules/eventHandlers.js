@@ -4,7 +4,7 @@ config = require('../../config.js');
 
 module.exports = {
     channelCreate: async (channel) => {
-        if(channel.type === 'dm') return
+        if(channel.type === 'dm') return;
         if(!config.servers[channel.guild.id].logs.channelCreate) return;
         channel.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(channel.guild.name, channel.guild.iconURL())
@@ -14,7 +14,7 @@ module.exports = {
             .setColor('#23d160'));
     },
     channelDelete: async (channel) => {
-        if(channel.type === 'dm') return
+        if(channel.type === 'dm') return;
         if(!config.servers[channel.guild.id].logs.channelDelete) return;
         channel.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(channel.guild.name, channel.guild.iconURL())
@@ -98,7 +98,7 @@ module.exports = {
     },
     messageDelete: async (message) => {
         if(!config.servers[message.guild.id].logs.messageDelete) return;
-        if(message.channel.type === 'dm') return
+        if(message.channel.type === 'dm') return;
         message.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(`${message.author.username}#${message.author.discriminator}`, message.author.displayAvatarURL())
             .setDescription(`**Message sent by <@${message.author.id}> deleted in <#${message.channel.id}>**\n${message.content}`)
@@ -118,11 +118,11 @@ module.exports = {
         if(!config.servers[messageReaction.message.guild.id].logs.messageReactionAdd) return;
         switch(messageReaction.emoji.name) {
             case '⭐':
-                var starBoardHasMessage = false
+                var starBoardHasMessage = false;
                 await messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').messages.fetch()
                     .then((messages) => {
                         messages.forEach((message) => {
-                          if(message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) starBoardHasMessage = true
+                          if(message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) starBoardHasMessage = true;
                         });
                     });
                 if(messageReaction.count === config.starboardStars && !starBoardHasMessage) messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').send(new Discord.MessageEmbed()
@@ -131,7 +131,7 @@ module.exports = {
                     .setFooter(`${messageReaction.message.reactions.find((reaction) => messageReaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
                     .addField('Channel', messageReaction.message.channel)
                     .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
-                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
+                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''));
                 else {
                     await messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').messages.fetch()
                         .then((messages) => {
@@ -142,9 +142,9 @@ module.exports = {
                                     .setFooter(`${messageReaction.message.reactions.find((reaction) => reaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
                                     .addField('Channel', messageReaction.message.channel)
                                     .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
-                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
-                            })
-                        })
+                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''));
+                            });
+                        });
                 }
                 break;
         }
@@ -163,17 +163,17 @@ module.exports = {
                                     .setFooter(`${messageReaction.message.reactions.find((reaction) => messageReaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
                                     .addField('Channel', messageReaction.message.channel)
                                     .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
-                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
+                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''));
                                 else message.edit(new Discord.MessageEmbed()
                                     .setColor(0x00FF00)
                                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                                     .setFooter(`0⭐ | ${messageReaction.message.id}`)
                                     .addField('Channel', messageReaction.message.channel)
                                     .addField('Message', `[${messageReaction.message.content !== '' ? messageReaction.message : 'Jump To'}](${messageReaction.message.url})`)
-                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''))
+                                    .setImage(messageReaction.message.attachments.first() ? messageReaction.message.attachments.first().url : ''));
                                 }
-                        })
-                    })
+                        });
+                    });
                 break;
         }
     },
@@ -181,9 +181,10 @@ module.exports = {
 
     },
     messageUpdate: async (oldMessage, newMessage) => {
-        if(oldMessage.channel.type === 'dm') return
-        if(oldMessage.content === '' || newMessage.content === '') return
-        if(oldMessage.content === newMessage.content) return
+        if(oldMessage.channel.type === 'dm') return;
+        if(oldMessage.content === '' || newMessage.content === '') return;
+        if(oldMessage.content === newMessage.content) return;
+        if (newMessage.content.includes('tenor.com') || newMessage.content.includes('giphy.com') || newMessage.content.includes('imgur.com')) newMessage.delete();
         if(!config.servers[oldMessage.guild.id].logs.messageUpdate) return;
         oldMessage.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(`${newMessage.author.username}#${newMessage.author.discriminator}`, newMessage.author.displayAvatarURL())

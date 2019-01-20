@@ -1,6 +1,21 @@
 "use strict";
 module.exports = {
     '452245310320672769': {
+        name: 'KAD',
+        rules: [
+            'As you would anywhere, use common sense. You may be warned or kicked or even banned for something that does not appear on this list.',
+            'Please respect the decisions of Staff and please respect each other. We want to have a good time here!',
+            'Do not post or refer to NSFW content in any way. This includes “edgy” content that isn’t explicitly NSFW but is on the edge or close to it. This definition is fairly broad, so please be on the safe side and don’t post questionable content, and respect Staff if they tell you to not post it.',
+            'Out of respect for those who do not appreciate cursing, please do not curse. Yes, this is the real world, but it is respectful to watch your language.',
+            'Please do not bring drama here from other servers or websites, and please do not make drama here.',
+            'Please do not discuss sections of the site that KA Staff use for testing, storing beta content, or anything like this. KA Staff have requested these sections not be discussed publicly, and we will respect that.',
+            'Please do not discuss exploiting KA in any way.',
+            'Please do not discuss the ban status of accounts other than yours, because others may not want to disclose this information publicly.',
+            'Do not use alternate accounts for any reason.',
+            'Do not post invite links to other servers.',
+            'Please do not maliciously impersonate other members of this server. Impersonation of KA users who are not in this server is strictly prohibited.',
+            'Please do not advertise any servers in the Direct Messages (DMs) of our members, doing so will result in a ban.'
+        ],
         mutedRole: 'Muted',
         logsChannel: 'logs',
         starboardChannel: 'starboard',
@@ -44,6 +59,7 @@ module.exports = {
             cat: true,
             dog: true,
             login: true,
+            rules: true,
             suggestion: true,
             userinfo: true,
             serverinfo: true,
@@ -65,6 +81,21 @@ module.exports = {
         }
     },
     '528076719694020629': {
+        name: 'bot dev',
+        rules: [
+            'As you would anywhere, use common sense. You may be warned or kicked or even banned for something that does not appear on this list.',
+            'Please respect the decisions of Staff and please respect each other. We want to have a good time here!',
+            'Do not post or refer to NSFW content in any way. This includes “edgy” content that isn’t explicitly NSFW but is on the edge or close to it. This definition is fairly broad, so please be on the safe side and don’t post questionable content, and respect Staff if they tell you to not post it.',
+            'Out of respect for those who do not appreciate cursing, please do not curse. Yes, this is the real world, but it is respectful to watch your language.',
+            'Please do not bring drama here from other servers or websites, and please do not make drama here.',
+            'Please do not discuss sections of the site that KA Staff use for testing, storing beta content, or anything like this. KA Staff have requested these sections not be discussed publicly, and we will respect that.',
+            'Please do not discuss exploiting KA in any way.',
+            'Please do not discuss the ban status of accounts other than yours, because others may not want to disclose this information publicly.',
+            'Do not use alternate accounts for any reason.',
+            'Do not post invite links to other servers.',
+            'Please do not maliciously impersonate other members of this server. Impersonation of KA users who are not in this server is strictly prohibited.',
+            'Please do not advertise any servers in the Direct Messages (DMs) of our members, doing so will result in a ban.'
+        ],
         mutedRole: 'muted',
         logsChannel: 'logs',
         starboardChannel: 'starboard',
@@ -108,6 +139,76 @@ module.exports = {
             cat: true,
             dog: true,
             login: true,
+            rules: true,
+            suggestion: true,
+            userinfo: true,
+            serverinfo: true,
+            hotlist: true,
+            kabadgecount: true,
+            kaprofile: true,
+            play: true,
+            yt: true,
+            skip: true,
+            pause: true,
+            queue: true,
+            resume: true,
+            volume: true,
+            clear: true,
+            clearqueue: true,
+            mute: true,
+            unmute: true,
+            warn: true
+        }
+    },
+    '534942288187752459': {
+        name: 'SharkFin Servers v2',
+        rules: [
+            ''
+        ],
+        mutedRole: 'Muted',
+        logsChannel: 'logs',
+        starboardChannel: 'starboard',
+        logs: {
+            channelCreate: true,
+            channelDelete: true,
+            channelPinsUpdate: true,
+            channelUpdate: true,
+            emojiCreate: true,
+            emojiDelete: true,
+            emojiUpdate: true,
+            guildBanAdd: true,
+            guildBanRemove: true,
+            guildIntegrationsUpdate: true,
+            guildMemberAdd: true,
+            guildMemberAvailable: true,
+            guildMemberRemove: true,
+            guildMembersChunk: true,
+            guildMemberSpeaking: true,
+            guildMemberUpdate: true,
+            guildUpdate: true,
+            messageDelete: true,
+            messageDeleteBulk: true,
+            messageReactionAdd: true,
+            messageReactionRemove: true,
+            messageReactionRemoveAll: true,
+            messageUpdate: true,
+            presenceUpdate: true,
+            roleCreate: true,
+            roleDelete: true,
+            roleUpdate: true,
+            typingStart: true,
+            typingStop: true,
+            userUpdate: true,
+            voiceStateUpdate: true,
+            webhookUpdate: true
+        },
+        commands: {
+            help: true,
+            bans: true,
+            cat: true,
+            dog: true,
+            login: true,
+            rules: true,
             suggestion: true,
             userinfo: true,
             serverinfo: true,
@@ -128,4 +229,4 @@ module.exports = {
             warn: true
         }
     }
-}
+};

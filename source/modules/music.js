@@ -21,40 +21,40 @@ class music {
 
     skip(message) {
         if(message.author.id !== '419151003766620180' && !message.member.roles.has('453715852735414302')) return;
-        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`)
-        if(this.queue.songs.length === 0) return message.channel.send(`No songs are in the queue0!`)
+        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
+        if(this.queue.songs.length === 0) return message.channel.send(`No songs are in the queue!`);
         this.queue.dispatcher.end();
         if(this.queue.songs.length > 0) message.channel.send("Skipped Current Song!");
     }
 
     pause(message) {
-        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`)
-        if(!this.queue.playing) return message.channel.send(`No song is currently playing!`)
-        if(this.queue.dispatcher.paused) return message.channel.send('Music is currently paused!')
+        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
+        if(!this.queue.playing) return message.channel.send(`No song is currently playing!`);
+        if(this.queue.dispatcher.paused) return message.channel.send('Music is currently paused!');
         this.queue.dispatcher.pause();
         this.queue.playing = false;
         message.channel.send("Paused Current Song!");
     }
 
     resume(message) {
-        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`)
-        if(this.queue.length === 0) return message.channel.send(`The queue is empty!`)
-        if(!this.queue.dispatcher.paused) return message.channel.send('Music is currently playing!')
+        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
+        if(this.queue.length === 0) return message.channel.send(`The queue is empty!`);
+        if(!this.queue.dispatcher.paused) return message.channel.send('Music is currently playing!');
         this.queue.dispatcher.resume();
         this.queue.playing = true;
         message.channel.send("Resumed Current Song!");
     }
 
     setVolume(message, volume) {
-      if(message.author.id !== '419151003766620180') return
-        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`)
-        if(!this.queue.playing) return message.channel.send(`No song is currently playing!`)
+      if(message.author.id !== '419151003766620180') return;
+        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
+        if(!this.queue.playing) return message.channel.send(`No song is currently playing!`);
         this.queue.dispatcher.setVolume(volume / 100);
         message.channel.send(`Set volume to ${this.queue.dispatcher.volume}`);
     }
 
     async addSong(message, args) {
-        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`)
+        if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
         let voiceChannel = message.member.voice.channel;
         if(!voiceChannel.permissionsFor(message.client.user).has('CONNECT')) return message.channel.send(`I cannot connect to this voice channel!`);
         if(!voiceChannel.permissionsFor(message.client.user).has('SPEAK')) return message.channel.send(`I cannot speak in this voice channel!`);
@@ -68,16 +68,16 @@ class music {
             this.queue.voiceChannel = voiceChannel;
             this.queue.songs.push(song);
             try {
-                this.play(message.guild, this.queue.songs[0])
+                this.play(message.guild, this.queue.songs[0]);
             } catch (error) {
                 this.queue.textChannel = undefined;
                 this.queue.voiceChannel = undefined;
                 this.queue.songs = [];
-                return message.channel.send(`Failed to join voice channel ${error}`)
+                return message.channel.send(`Failed to join voice channel ${error}`);
             }
         } else {
             this.queue.songs.push(song);
-            message.channel.send(`**${song.title}** has been added to the queue.`)
+            message.channel.send(`**${song.title}** has been added to the queue.`);
         }
     }
 
@@ -87,7 +87,7 @@ class music {
             this.queue.voiceChannel.leave();
             this.queue.textChannel = undefined;
             this.queue.voiceChannel = undefined;
-            this.queue.playing = false
+            this.queue.playing = false;
             return;
         }
         this.queue.voiceChannel.join().then(connection => {
