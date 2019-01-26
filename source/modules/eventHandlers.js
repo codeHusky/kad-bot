@@ -1,11 +1,11 @@
 "use strict";
 const Discord = require('discord.js'),
-config = require('../../config.js');
+config = require('../../privconfig.js');
 
 module.exports = {
     channelCreate: async (channel) => {
-        if(channel.type === 'dm') return;
-        if(!config.servers[channel.guild.id].logs.channelCreate) return;
+        if (channel.type === 'dm') return;
+        if (!config.servers[channel.guild.id].logs.channelCreate) return;
         channel.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(channel.guild.name, channel.guild.iconURL())
             .setThumbnail(channel.guild.iconURL())
@@ -14,8 +14,8 @@ module.exports = {
             .setColor('#23d160'));
     },
     channelDelete: async (channel) => {
-        if(channel.type === 'dm') return;
-        if(!config.servers[channel.guild.id].logs.channelDelete) return;
+        if (channel.type === 'dm') return;
+        if (!config.servers[channel.guild.id].logs.channelDelete) return;
         channel.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(channel.guild.name, channel.guild.iconURL())
             .setThumbnail(channel.guild.iconURL())
@@ -39,7 +39,7 @@ module.exports = {
 
     },
     guildBanAdd: async (guild, user) => {
-        if(!config.servers[guild.id].logs.guildBanAdd) return;
+        if (!config.servers[guild.id].logs.guildBanAdd) return;
         guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor('Member Banned', user.displayAvatarURL())
             .setThumbnail(user.displayAvatarURL())
@@ -49,7 +49,7 @@ module.exports = {
             .setColor('#ff470f'));
     },
     guildBanRemove: async (guild, user) => {
-      if(!config.servers[guild.id].logs.guildBanRemove) return;
+      if (!config.servers[guild.id].logs.guildBanRemove) return;
         guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor('Member Unbanned', user.displayAvatarURL())
             .setThumbnail(user.displayAvatarURL())
@@ -62,7 +62,11 @@ module.exports = {
 
     },
     guildMemberAdd: async (member) => {
-        if(!config.servers[member.guild.id].logs.guildMemberAdd) return;
+        if (config.servers[member.guild.id].joinMessage !== '') member.guild.channels.find(channel => channel.name === config.servers[member.guild.id].joinMessageChannel).send(config.servers[member.guild.id].joinMessage);
+        config.servers[member.guild.id].onJoinRoles.forEach((r) => {
+            //member.addRole(member.guild.roles.find((role) => role.name === r).id).catch(console.error);
+        });
+        if (!config.servers[member.guild.id].logs.guildMemberAdd) return;
         member.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor('Member Joined', member.user.displayAvatarURL())
             .setThumbnail(member.user.displayAvatarURL())
@@ -75,7 +79,7 @@ module.exports = {
 
     },
     guildMemberRemove: async (member) => {
-        if(!config.servers[member.guild.id].logs.guildMemberRemove) return;
+        if (!config.servers[member.guild.id].logs.guildMemberRemove) return;
         member.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor('Member Left', member.user.displayAvatarURL())
             .setThumbnail(member.user.displayAvatarURL())
@@ -97,8 +101,8 @@ module.exports = {
 
     },
     messageDelete: async (message) => {
-        if(!config.servers[message.guild.id].logs.messageDelete) return;
-        if(message.channel.type === 'dm') return;
+        if (!config.servers[message.guild.id].logs.messageDelete) return;
+        if (message.channel.type === 'dm') return;
         message.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(`${message.author.username}#${message.author.discriminator}`, message.author.displayAvatarURL())
             .setDescription(`**Message sent by <@${message.author.id}> deleted in <#${message.channel.id}>**\n${message.content}`)
@@ -107,7 +111,7 @@ module.exports = {
             .setColor('#ff470f'));
     },
     messageDeleteBulk: async (messages) => {
-        if(!config.servers[messages.first().guild.id].logs.messageDeleteBulk) return;
+        if (!config.servers[messages.first().guild.id].logs.messageDeleteBulk) return;
         messages.first().guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor('Bulk Message Delete', messages.first().guild.iconURL())
             .setDescription(`${messages.size} Messages deleted in ${messages.first().channel.name}`)
@@ -115,17 +119,17 @@ module.exports = {
             .setColor('#ff470f'));
     },
     messageReactionAdd: async (messageReaction, user) => {
-        if(!config.servers[messageReaction.message.guild.id].logs.messageReactionAdd) return;
+        //if (!config.servers[messageReaction.message.guild.id].logs.messageReactionAdd) return;
         switch(messageReaction.emoji.name) {
             case '⭐':
-                var starBoardHasMessage = false;
+                let starBoardHasMessage = false;
                 await messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').messages.fetch()
                     .then((messages) => {
                         messages.forEach((message) => {
-                          if(message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) starBoardHasMessage = true;
+                            if (message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) starBoardHasMessage = true;
                         });
                     });
-                if(messageReaction.count === config.starboardStars && !starBoardHasMessage) messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').send(new Discord.MessageEmbed()
+                if (messageReaction.count === config.starboardStars && !starBoardHasMessage) messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').send(new Discord.MessageEmbed()
                     .setColor(0x00FF00)
                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                     .setFooter(`${messageReaction.message.reactions.find((reaction) => messageReaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
@@ -136,7 +140,7 @@ module.exports = {
                     await messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').messages.fetch()
                         .then((messages) => {
                             messages.forEach((message) => {
-                                if(message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) message.edit(new Discord.MessageEmbed()
+                                if (message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) message.edit(new Discord.MessageEmbed()
                                     .setColor(0x00FF00)
                                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                                     .setFooter(`${messageReaction.message.reactions.find((reaction) => reaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
@@ -150,14 +154,14 @@ module.exports = {
         }
     },
     messageReactionRemove: async (messageReaction, user) => {
-      if(!config.servers[messageReaction.message.guild.id].logs.messageReactionRemove) return;
+      //if (!config.servers[messageReaction.message.guild.id].logs.messageReactionRemove) return;
         switch(messageReaction.emoji.name) {
             case '⭐':
                 await messageReaction.message.guild.channels.find((channel) => channel.name === 'starboard').messages.fetch()
                     .then((messages) => {
                         messages.forEach((message) => {
-                            if(message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) {
-                                if(messageReaction.message.reactions.find((reaction) => messageReaction.emoji.name === '⭐')) message.edit(new Discord.MessageEmbed()
+                            if (message.embeds[0].footer.text.split(' | ')[1] === messageReaction.message.id) {
+                                if (messageReaction.message.reactions.find((reaction) => messageReaction.emoji.name === '⭐')) message.edit(new Discord.MessageEmbed()
                                     .setColor(0x00FF00)
                                     .setAuthor(`${messageReaction.message.author.username}#${messageReaction.message.author.discriminator}`, messageReaction.message.author.avatarURL())
                                     .setFooter(`${messageReaction.message.reactions.find((reaction) => messageReaction.emoji.name === '⭐').count}⭐ | ${messageReaction.message.id}`)
@@ -181,11 +185,11 @@ module.exports = {
 
     },
     messageUpdate: async (oldMessage, newMessage) => {
-        if(oldMessage.channel.type === 'dm') return;
-        if(oldMessage.content === '' || newMessage.content === '') return;
-        if(oldMessage.content === newMessage.content) return;
-        if (newMessage.content.includes('tenor.com') || newMessage.content.includes('giphy.com') || newMessage.content.includes('imgur.com')) newMessage.delete();
-        if(!config.servers[oldMessage.guild.id].logs.messageUpdate) return;
+        if (oldMessage.channel.type === 'dm') return;
+        if (oldMessage.content === '' || newMessage.content === '') return;
+        if (oldMessage.content === newMessage.content) return;
+        if (config.bannedStrings.findIndex((e) => newMessage.content.includes(e)) >= 0) return newMessage.delete();
+        if (!config.servers[oldMessage.guild.id].logs.messageUpdate) return;
         oldMessage.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(`${newMessage.author.username}#${newMessage.author.discriminator}`, newMessage.author.displayAvatarURL())
             .addField('Before', oldMessage.content || 'none')
@@ -198,7 +202,7 @@ module.exports = {
 
     },
     roleCreate: async (role) => {
-        if(!config.servers[role.guild.id].logs.roleCreate) return;
+        if (!config.servers[role.guild.id].logs.roleCreate) return;
         role.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(role.guild.name, role.guild.iconURL())
             .setDescription(`Role Created: ${role.name}`)
@@ -206,7 +210,7 @@ module.exports = {
             .setColor('#23d160'));
     },
     roleDelete: async (role) => {
-        if(!config.servers[role.guild.id].logs.roleDelete) return;
+        if (!config.servers[role.guild.id].logs.roleDelete) return;
         role.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(role.guild.name, role.guild.iconURL())
             .setDescription(`Role Deleted: ${role.name}`)

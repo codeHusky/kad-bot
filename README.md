@@ -1,2 +1,2 @@
 # kad-bot
-Khan Academy Discord bot
+Khan Academy Bot

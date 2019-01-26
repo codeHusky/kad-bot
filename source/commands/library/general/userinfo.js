@@ -1,8 +1,8 @@
 "use strict";
 const Discord = require('discord.js');
 module.exports = (message, commandList, config, server) => {
-    let user = message.mentions.users.first() ? message.mentions.users.first() : message.author;
-    let presence = (message.author.id === user.id && user.presence.status === 'offline') ? 'invisible' : user.presence.status;
+    let user = message.mentions.users.first() ? message.mentions.users.first() : message.author,
+        presence = (message.author.id === user.id && user.presence.status === 'offline') ? 'invisible' : user.presence.status;
     message.channel.send(new Discord.MessageEmbed()
         .setColor('#0FF0FF')
         .setThumbnail(user.displayAvatarURL())

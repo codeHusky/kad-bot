@@ -1,8 +1,8 @@
 "use strict";
 const Discord = require('discord.js');
 module.exports = (message, commandList, config, server) => {
-    var commands = {};
-    for(var each in commandList) {
+    let commands = {};
+    for (let each in commandList) {
         commands[commandList[each].type] ? true : commands[commandList[each].type] = [];
         commands[commandList[each].type].push(config.prefix + each + (commandList[each].args === '' ? '' : ' [' + commandList[each].args.join('] [') + ']') + ': ' + commandList[each].description);
     }

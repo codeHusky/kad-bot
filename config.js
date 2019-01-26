@@ -9,5 +9,6 @@ module.exports = {
     },
     ytKey: '',
     callbackURL: 'https://localhost/login',
-    servers: servers
+    servers: servers,
+    bannedStrings: []
 };

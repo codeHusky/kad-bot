@@ -29,7 +29,7 @@ module.exports = {
         args: ''
     },
     login: {
-        enabled: false,
+        enabled: true,
         description: 'Connect your KA account',
         type: 'general',
         command: 'library/general/login.js',
@@ -83,6 +83,13 @@ module.exports = {
         type: 'ka',
         command: 'library/ka/kaProfile.js',
         args: ['username']
+    },
+    whois: {
+        enabled: true,
+        description: 'See who a discord user is on Khan Academy',
+        type: 'ka',
+        command: 'library/ka/whois.js',
+        args: ['user']
     },
     play: {
         enabled: false,

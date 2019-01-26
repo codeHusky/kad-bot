@@ -6,9 +6,6 @@
   "scripts": {
     "start": "node ."
   },
-  "engines": {
-    "node": "11.6.0"
-  },
   "author": "SharkFin",
   "license": "ISC",
   "dependencies": {
@@ -22,6 +19,7 @@
     "node-opus": "latest",
     "oauth-1-client": "latest",
     "request": "latest",
+    "sqlite3": "^4.0.6",
     "uws": "latest",
     "youtube-search": "latest",
     "ytdl-core": "latest",
