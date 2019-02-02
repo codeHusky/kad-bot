@@ -2,6 +2,7 @@
 const Discord = require('discord.js'),
     search = require('youtube-search');
 module.exports = (message, commandList, config, server) => {
+    if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
     search(message.content.split(' ').splice(1).join(' '), { maxResults: 25, key: config.ytKey }, (err, results) => {
         if (err) return message.channel.send(`**ERROR**: ${err}`);
         results = results.filter((result) => result.kind === 'youtube#video').slice(0, 5);

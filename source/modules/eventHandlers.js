@@ -64,7 +64,7 @@ module.exports = {
     guildMemberAdd: async (member) => {
         if (config.servers[member.guild.id].joinMessage !== '') member.guild.channels.find(channel => channel.name === config.servers[member.guild.id].joinMessageChannel).send(config.servers[member.guild.id].joinMessage);
         config.servers[member.guild.id].onJoinRoles.forEach((r) => {
-            //member.addRole(member.guild.roles.find((role) => role.name === r).id).catch(console.error);
+            member.roles.add(member.guild.roles.find((role) => role.name === r).id).catch(console.error);
         });
         if (!config.servers[member.guild.id].logs.guildMemberAdd) return;
         member.guild.channels.find(channel => channel.name === 'logs').send(new Discord.MessageEmbed()
@@ -103,6 +103,7 @@ module.exports = {
     messageDelete: async (message) => {
         if (!config.servers[message.guild.id].logs.messageDelete) return;
         if (message.channel.type === 'dm') return;
+        console.log(`Message sent by ${message.author.tag} deleted in ${message.channel.name} on ${message.guild.name}`);
         message.guild.channels.find((channel) => channel.name === 'logs').send(new Discord.MessageEmbed()
             .setAuthor(`${message.author.username}#${message.author.discriminator}`, message.author.displayAvatarURL())
             .setDescription(`**Message sent by <@${message.author.id}> deleted in <#${message.channel.id}>**\n${message.content}`)

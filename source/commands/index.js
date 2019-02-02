@@ -92,7 +92,7 @@ module.exports = {
         args: ['user']
     },
     play: {
-        enabled: false,
+        enabled: true,
         description: 'Plays a song from YT',
         type: 'music',
         command: 'library/music/play.js',

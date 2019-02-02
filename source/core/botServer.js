@@ -6,8 +6,8 @@ const Discord = require('discord.js'),
     commandList = require('../commands/index.js'),
     eventHandlers = require('../modules/eventHandlers.js'),
     music = require('../modules/music.js'),
-    //whiteList = ['419151003766620180'],
-    blackList = [/*'499817470442602496'*/];
+    whiteList = ['419151003766620180'],
+    blackList = [];
 
 module.exports = class botServer {
     constructor(config) {

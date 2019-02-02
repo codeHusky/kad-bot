@@ -32,7 +32,7 @@ class music {
         if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
         if (!this.queue.playing) return message.channel.send(`No song is currently playing!`);
         if (this.queue.dispatcher.paused) return message.channel.send('Music is currently paused!');
-        this.queue.dispatcher.pause();
+        this.queue.dispatcher.pause(true);
         this.queue.playing = false;
         message.channel.send("Paused Current Song!");
     }
@@ -58,11 +58,10 @@ class music {
     async addSong(message, args) {
         if (!message.member.voice.channel) return message.reply(`Please be in a voice channel first!`);
         let voiceChannel = message.member.voice.channel;
-        if (!voiceChannel.permissionsfor (message.client.user).has('CONNECT')) return message.channel.send(`I cannot connect to this voice channel!`);
-        if (!voiceChannel.permissionsfor (message.client.user).has('SPEAK')) return message.channel.send(`I cannot speak in this voice channel!`);
-
-        //let valid = await ytdl.validateID(args[1]);
-        //if (!valid) return
+        if (!voiceChannel.permissionsFor(message.client.user).has('CONNECT')) return message.channel.send(`I cannot connect to this voice channel!`);
+        if (!voiceChannel.permissionsFor(message.client.user).has('SPEAK')) return message.channel.send(`I cannot speak in this voice channel!`);
+        
+        if (!await ytdl.validateID(args[1]) && !await ytdl.validateURL(args[1])) return message.channel.send(`Cannot find song **${args[1]}**`);
         let song = await ytdl.getInfo(args[1]);
         if (this.queue.songs.length === 0) {
             this.queue.textChannel = message.channel;
@@ -98,7 +97,7 @@ class music {
                 passes: 5,
                 bitrate: 96000
             })
-            .on('end', (reason) => {
+            .on('finish', (reason) => {
                 this.queue.songs.shift();
                 this.play(guild, this.queue.songs[0]);
             })
